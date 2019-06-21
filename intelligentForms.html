@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Intelligent Form</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		*{
+			margin: auto;
+			text-align: center;
+			font-family: arial, sans-serif; 	
+		}
+		div{
+			width: 600px;
+			height: 70vh;
+			padding: 40px 0 30px 0;
+			background: #3bcdde;
+			margin-top: 50px;
+			border-radius: 10px;
+			box-shadow: 5px 5px 15px rgba(0,0,0,0.7)
+		}
+		h2{
+			margin-bottom: 30px;
+			font-weight: lighter;
+			font-variant: small-caps;
+			font-size: 2.5em;
+		}
+		input[type="text"],input[type="password"],input[type="number"]{
+			width: 400px;
+			height: 30px;
+			border: solid 1px skyblue;
+			border-radius: 5px;
+			transition: 1s;
+			margin: auto;
+		}
+		input[type="text"]:hover,input[type="password"]:hover,input[type="number"]:hover,
+		input[type="text"]:focus,input[type="password"]:focus,input[type="number"]:focus{
+			border: solid 1px darkblue;
+			
+		}
+
+
+		h3{
+			margin-right: 20px;
+			font-weight: lighter;
+		}
+		input[type="submit"]{
+			width: 120px;
+			height: 35px;
+			margin-bottom: 30px;
+			background: #ccc;
+			border: 0;
+		}
+		input[type="submit"]:hover{
+			background: #ddd;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h2>sign up</h2>
+		<form action="">
+			<input type="text" name="" id="name" placeholder="Name"><br /> <br />
+			<input type="number" name="" id="num" placeholder="Phone Number"><br /> <br />
+			<h3>Gender:</h3> <br />	
+			<input type="radio" name="gender" id="male" checked> Male
+			<input type="radio" name="gender" id="female"> Female <br /> <br />
+			<input type="text" name="" id="usrn" placeholder="Username"><br /> <br />
+			<input type="password" name="" id="pass" placeholder="Password"><br /> <br />
+			<input type="password" name="" id="confirm" placeholder="Confirm Password"><br /><br />
+			<input type="submit" name="" value="Submit";>
+
+		</form>	
+	</div>
+</body>
+<script>
+	let name = document.getElementById('name'),
+		phNumber = document.getElementById('num'),
+		male = document.getElementById('male'),
+		female = document.getElementById('female'),
+		username = document.getElementById('usrn'),
+		password = document.getElementById('pass'),
+		confirm  = document.getElementById('confirm'),
+
+		msg = new SpeechSynthesisUtterance();
+
+
+		name.onfocus = function(){
+			msg.text = 'Please Enter Your Name';
+			window.speechSynthesis.speak(msg);
+			name.onkeyup = function(){
+				if(name.value.length < 3){
+				msg.text = 'Your name must be at least 3 characters';
+				window.speechSynthesis.speak(msg);
+				}
+
+				let patt = /[^A-Za-z]/ig;
+				let check = patt.test(name.value);
+				if(check){
+					msg.text = 'Your name must contain only alphabets';
+					window.speechSynthesis.speak(msg);
+				}
+				if(!check && name.value.length > 3){
+					let verify = name.value;
+					msg.text = 'thank you '+verify+', your input is valid, you may proceed';
+					window.speechSynthesis.speak(msg);
+				}
+			}
+		}
+
+		phNumber.onfocus = function(){
+			msg.text = 'Please Enter Your Phone number';
+			window.speechSynthesis.speak(msg);
+			phNumber.onkeyup = function(){
+				if(phNumber.value.length < 11){
+				msg.text = 'Your phone number must be 11 characters';
+				window.speechSynthesis.speak(msg);
+				}
+
+				if(phNumber.value.length > 11){
+				msg.text = 'Your phone number must not be more than 11 characters';
+				window.speechSynthesis.speak(msg);
+				}
+
+				if(phNumber.value.length == 11){
+				msg.text = 'Your phone number is valid, you may proceed';
+				window.speechSynthesis.speak(msg);
+				}
+			}
+		}
+		male.onclick = function (){
+			msg.text = 'The gender you selected is male';
+			window.speechSynthesis.speak(msg);
+		}
+
+		female.onclick = function (){
+			msg.text = 'The gender you selected is female';
+			window.speechSynthesis.speak(msg);
+		}
+
+		username.onfocus = function(){
+			msg.text = 'Please Enter Your Username';
+			window.speechSynthesis.speak(msg);
+			username.onkeyup = function(){
+				if(username.value.length < 6){
+				msg.text = 'Your username must be at least 6 characters';
+				window.speechSynthesis.speak(msg);
+				}
+				let patt = /^[A-Za-z0-9]/g;
+				let check = patt.test(username.value);
+				if(!check){
+				msg.text = 'Your username can only contain alphabets and numbers';
+				window.speechSynthesis.speak(msg);
+				}
+
+				if(check && username.value.length > 5){
+				msg.text = 'Your username is valid, you may proceed';
+				window.speechSynthesis.speak(msg);
+				}
+			}
+		}
+
+		password.onfocus = function(){
+			msg.text = 'Please Enter Your Password. Your password can contain alphabets, numbers and special characters';
+			window.speechSynthesis.speak(msg);
+			password.onkeyup = function(){
+				if(password.value.length < 8){
+				msg.text = 'Your password must be at least 8 characters';
+				window.speechSynthesis.speak(msg);
+				}
+				// let patt = /^[/w]/g,
+				// 	check = patt.test(password.value),
+				// 	patt2 = /^[A-Za-z0-9]/g,
+				// 	verify = patt2.test(password.value);
+
+				if(password.value.length >= 8){
+				msg.text = 'Your password is valid, you may proceed to confirm your password';
+				window.speechSynthesis.speak(msg);
+				}
+			}
+		}
+
+		confirm.onfocus = function(){
+			msg.text = 'you can confirm your password';
+			window.speechSynthesis.speak(msg);
+			confirm.onkeyup = function(){
+				if(password.value.length == 0){
+				msg.text = 'your password input is empty, Please kindly fill it';
+				window.speechSynthesis.speak(msg);
+				}
+				if(confirm.value == password.value){
+				msg.text = 'Your password confirmed, you may submit';
+				window.speechSynthesis.speak(msg);
+				}
+				if(confirm.value != password.value){56
+				msg.text = 'your password does not match';
+				window.speechSynthesis.speak(msg);
+				}
+			}
+		}
+</script>
+</html>
+
+
+
+
+
+
+

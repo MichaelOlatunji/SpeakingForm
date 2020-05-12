@@ -83,7 +83,7 @@
 		confirm  = document.getElementById('confirm'),
 
 		msg = new SpeechSynthesisUtterance();
-
+		msg.lang = "English"
 
 		name.onfocus = function(){
 			msg.text = 'Please Enter Your Name';
